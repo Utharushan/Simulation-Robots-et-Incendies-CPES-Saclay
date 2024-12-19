@@ -112,5 +112,3 @@ Avant de commencer, assurez-vous que les éléments suivants sont installés :
 
 Pour toute question ou suggestion, contactez les auteurs via les emails ci-dessus.  
 Découvrez également un **easter egg** caché dans le menu principal !
-
----
