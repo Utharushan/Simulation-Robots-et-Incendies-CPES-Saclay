@@ -14,7 +14,7 @@ pygame.init()
 # Dimensions de la fenêtre
 fenetre = pygame.display.set_mode((700, 700))
 
-#On charge toutes les images nécessaires dans un  dictionnaire afin qu'on n'aie à les charger qu'une seule fois.
+# On charge toutes les images nécessaires dans un dictionnaire afin qu'on n'aie à les charger qu'une seule fois
 BLANC = (255, 255, 255)
 NOIR = (0, 0, 0)
 IMAGES = {
@@ -35,6 +35,7 @@ IMAGES = {
 }
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------    
+
 def checke_liste_de_A(tab):
     """
     Prend en entrée une liste tab
@@ -201,8 +202,6 @@ def afficher_robots(fenetre, robots, largeur):
             image = pygame.transform.scale(IMAGES[robot.nom], (TAILLE_CASE, TAILLE_CASE))
             fenetre.blit(image, (y * TAILLE_CASE, x * TAILLE_CASE))
 
-
-
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------    
 
 class Menu:
@@ -234,7 +233,6 @@ class Menu:
             rect = texte.get_rect(center=(700 // 2, 700 // 2 + i * 60))
             self.fenetre.blit(texte, rect)
             
-
     def gerer_event(self, event):
         """
         Prend en entrée un Menu et un évènement
@@ -315,7 +313,6 @@ class choisir:
                         if choix != 4:
                             self.lancer_jeu_solo(choix)
                         self.etat = 'menu_principal'
-                    
 
             if self.etat == 'menu_principal':
                 self.menu_principal.dessiner()
@@ -324,7 +321,6 @@ class choisir:
 
             pygame.display.flip()
             self.clock.tick(30)
-
 
     def lancer_simulation(self, choix):
         """
@@ -416,8 +412,7 @@ class scenario:
                         'actions': actions,
                         'en_mouvement': False,
                         'action_effectuee': 0
-                    }
-                    
+                    }           
         return nouveau_dico
 
     def next(self):
@@ -497,7 +492,6 @@ class scenario:
                             temporaire.append(action[j])
                         action = temporaire.copy()
                         
-
                     nouveau_dico[rob]={'action_effectuee': nouveau_dico[rob]['action_effectuee'] , 'actions' : action}
                 nouveau_dico = nouveau_dico.copy()
                 self.next()
@@ -543,7 +537,6 @@ class jeux_solo:
         self.next()
         self.jouer_solo(robot_en_mouvement)
 
-
     def next(self):
         """
         ----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -555,7 +548,6 @@ class jeux_solo:
         afficher_incendies(self.fenetre, self.incendies, self.largeur, self.carte)
         afficher_robots(self.fenetre, self.robots, self.largeur)
         pygame.display.flip()
-
 
     def tour(self,nouveau_dico):
         """
@@ -579,7 +571,6 @@ class jeux_solo:
                 if not action or len (action) == 0:
                     nouveau_dico[rob]['en_mouvement'] = False
                     action = ['A' for i in range(int(temps_par_actualisation + 1 - temps))]
-                    
 
                 action_actuelle = action.pop(0)
                 if action_actuelle == 'R':
@@ -705,11 +696,9 @@ class jeux_solo:
             time.sleep(30)
             jeu = choisir()
             jeu.lancer()
-            
-
-
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
 class jeux_avec_vent :
     def __init__(self, Carte, difficulte):
         """
@@ -794,9 +783,6 @@ class jeux_avec_vent :
                             new_case.incendie = Incendie((i,j-1), 1000)
                             self.incendies.append(Incendie((i,j-1), 1000))
 
-        
-            
-
     def next(self):
         """
         ----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -808,7 +794,6 @@ class jeux_avec_vent :
         afficher_incendies(self.fenetre, self.incendies, self.largeur, self.carte)
         afficher_robots(self.fenetre, self.robots, self.largeur)
         pygame.display.flip()
-
 
     def tour(self,nouveau_dico):
         """
@@ -831,8 +816,7 @@ class jeux_avec_vent :
             while temps < temps_par_actualisation:
                 if not action or len (action) == 0:
                     nouveau_dico[rob]['en_mouvement'] = False
-                    action = ['A' for i in range(int(temps_par_actualisation + 1 - temps))]
-                    
+                    action = ['A' for i in range(int(temps_par_actualisation + 1 - temps))]    
 
                 action_actuelle = action.pop(0)
                 if action_actuelle == 'R':
@@ -961,17 +945,10 @@ class jeux_avec_vent :
             self.fenetre.blit(image,(700,700))
             time.sleep(30)
             pygame.quit()
-            sys.exit()
-    
-
-
-    
+            sys.exit()    
 
 #-----------------------------------------------------------------------------------------------------------------------------------------------------------
-
 
 if __name__ == "__main__":
              jeu = choisir()
              jeu.lancer()
-
-
