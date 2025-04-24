@@ -27,7 +27,7 @@ Avant de commencer, assurez-vous que les éléments suivants sont installés :
 1. Téléchargez le projet sous forme de fichier ZIP depuis le dépôt "Projet 2 LIPPS".
 2. Extrayez les fichiers dans un répertoire de votre choix.
 3. Vérifiez que les bibliothèques nécessaires sont installées.
-4. Lancez le fichier **`mainInterface.py`** pour démarrer l'application.
+4. Lancez le fichier **`main.py`** pour démarrer l'application.
 
 ---
 
