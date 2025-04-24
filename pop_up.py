@@ -3,6 +3,7 @@ from tkinter import ttk
 import math
 from tkinter import Scale, Button, Listbox, END, Label
 import pygame
+
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 class CompassPopup:
@@ -148,11 +149,7 @@ class RulesPopup:
     def close(self, event):
         self.root.destroy()
 
-    
-
-
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 
 class DirectionPopup:
     def __init__(self):
@@ -170,12 +167,12 @@ class DirectionPopup:
         self.selected_direction = None
         self.canvas = tk.Canvas(self.root, width=400, height=400, bg='white')
         self.canvas.pack(fill='both', expand=True)
-        self.draw_compass()# Lance la fonction pour dessiner la boussole
+        self.draw_compass() # Lance la fonction pour dessiner la boussole
         self.labels = []
         for direction, _ in self.directions:
             label = tk.Label(self.root, text=direction, font=("Helvetica", 24))
             self.labels.append(label)
-        #on positionne les points cardinaux de la boussole
+        # On positionne les points cardinaux de la boussole
         self.labels[0].place(relx=0.5, rely=0.2, anchor='center')  # Nord
         self.labels[1].place(relx=0.8, rely=0.5, anchor='center')  # Est
         self.labels[2].place(relx=0.5, rely=0.8, anchor='center')  # Sud
@@ -210,7 +207,7 @@ class DirectionPopup:
             else:
                 label.config(fg="black", bg="white")
 
-    #les fonctions suivantes permettent d'initialiser les mouvement sur la boussole
+    # Les fonctions suivantes permettent d'initialiser les mouvements sur la boussole
     def up(self, event):
         self.current_index = 0  # Nord
         self.update_labels()
@@ -236,7 +233,7 @@ class DirectionPopup:
         self.root.destroy()
     
     def get_selected_direction(self):
-        #Cette fonction renvoit la direction ainsi calculer
+        # Cette fonction renvoie la direction ainsi calculée
         return self.selected_direction
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -245,15 +242,15 @@ class AttributePopup:
     def __init__(self, obj):
         self.root = tk.Tk()
         self.root.title(f"Attributs de {obj.__class__.__name__}")
-        self.root.geometry("500x700")# Permet de definir la taille de la fenetre.
+        self.root.geometry("500x700") # Permet de definir la taille de la fenetre
         title = tk.Label(self.root, text=f"Attributs de {obj.__class__.__name__}", font=("Helvetica", 18, "bold"))
         title.pack(pady=10)
-        attr_frame = ttk.LabelFrame(self.root, text="Attributs")# création d'un cadre pour les attributs
+        attr_frame = ttk.LabelFrame(self.root, text="Attributs") # Création d'un cadre pour les attributs
         attr_frame.pack(fill="both", expand="yes", padx=20, pady=10)
         row = 0
         for attr, value in vars(obj).items():
-            attr_name = attr.replace('_', ' ').title()# Remplacer les underscores par des espaces et capitaliser chaque mot
-            # Ajouter des unités spécifiques de physique :) pour chaque attribut( m/s , s , L ou bien pourcentage)
+            attr_name = attr.replace('_', ' ').title() # Remplace les underscores par des espaces et capitaliser chaque mot
+            # Ajoute des unités spécifiques de physique :) pour chaque attribut (m/s, s, L ou bien pourcentage)
             if 'vitesse' in attr.lower():
                 value = f"{value} m/s"
             elif 'reservoir' in attr.lower():
@@ -262,28 +259,26 @@ class AttributePopup:
                 value = f"{value} s"
             elif 'nerf' in attr.lower():
                 value = f"{value} %"
-            # Cette partit du code permet d'afficher le cote de l'attribut 
+            # Cette partie du code permet d'afficher le cote de l'attribut 
             attr_label = tk.Label(attr_frame, text=f"{attr_name}:", font=("Helvetica", 14))
             attr_label.grid(row=row, column=0, sticky='w', padx=10, pady=5)
-            # Quand a celle-ci, elle affiche les valeurs des attributs.
+            # Quant à celle-ci, elle affiche les valeurs des attributs
             value_label = tk.Label(attr_frame, text=f"{value}", font=("Helvetica", 14))
             value_label.grid(row=row, column=1, sticky='w', padx=10, pady=5)
             row += 1
         close_button = tk.Button(self.root, text="Fermer", command=self.root.destroy)
         close_button.pack(pady=10)
-        # Onassocie les touches 'a' et 'Entrée' à la fermeture de la fenêtre
+        # On associe les touches 'a' et 'Entrée' à la fermeture de la fenêtre
         self.root.bind('<Return>', self.close)
         self.root.bind('<a>', self.close)
         self.root.mainloop()
+        
     def close(self, event):
         """
         Cette fonction est la même pour tous les pop up, elle permet de fermer la fenetre.
         Cependant , elle diffère dans ce qu'elle prend en compte c'est pourquoi nous n'avons pas utilisé de classe supérieure à toutes les fenetres pop up.
         """
         self.root.destroy()
-
-
-
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -306,7 +301,6 @@ class MusicPlayer:
         if self.musique_list:
             self.load_musique()
         
-    
     def load_musique(self):
         """"
         Prend en entrée l'objet de la classe créé
@@ -326,26 +320,25 @@ class MusicPlayer:
         Permet de modifier le volume de la musique. 
         ----------------------------------------------------------------------------------------------
         """
-        self.volume = max(0.0, min(1.0, volume))#permet de s'assurer que le volume reste un floatant et ne depasse pas 1.
+        self.volume = max(0.0, min(1.0, volume)) # Permet de s'assurer que le volume reste un flottant et ne dépasse pas 1
         pygame.mixer.music.set_volume(self.volume)
     
-    def stop_musique(self):#Permet de arreter la musique
+    def stop_musique(self): # Permet d'arrêter la musique
         pygame.mixer.music.stop()
     
-    def pause_musique(self):#Permet de soit mettre en pause la musique , ou bien si elle l'est deja , de la remettre en route.
+    def pause_musique(self): # Permet de mettre en pause la musique ou bien de la remettre en route
         if pygame.mixer.music.get_busy():
             pygame.mixer.music.pause()
         else:
             pygame.mixer.music.unpause()
     
-    def next_musique(self):#Permet de passer à la musique suivante selon l'indexe, appele la fonction load
+    def next_musique(self): # Permet de passer à la musique suivante selon l'indice, appelle la fonction load
         self.musique_index = (self.musique_index + 1) % len(self.musique_list)
         self.load_musique()
     
-    def previous_musique(self):#Permet de passer à la musique précédante selon l'indexe, appele la fonction load
+    def previous_musique(self): # Permet de passer à la musique précédente selon l'indice, appelle la fonction load
         self.musique_index = (self.musique_index - 1) % len(self.musique_list)
         self.load_musique()
-
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -367,7 +360,7 @@ class MusicPlayerPopup:
         # Titre de la musique en cours de lecture
         self.current_musique_label = Label(self.root, text="Musique en cours : " + self.musique_player.musique_list[self.musique_player.musique_index])
         self.current_musique_label.pack(padx=20, pady=10)
-        #On parametres les touches
+        # On paramètre les touches
         self.root.bind("<space>", lambda event: self.toggle_pause())
         self.root.bind("<Up>", lambda event: self.adjust_volume(0.1))
         self.root.bind("<Down>", lambda event: self.adjust_volume(-0.1))
@@ -376,7 +369,7 @@ class MusicPlayerPopup:
         self.root.mainloop()
     
     def toggle_pause(self):
-        #permet de definir l'evenement pause de la musique pour un bouton ou bien pour la touche espace
+        # Permet de definir l'évènement pause de la musique pour un bouton ou bien pour la touche espace
         self.musique_player.pause_musique()
         if pygame.mixer.music.get_busy():
             self.pause_button.configure(text="Espace pour Pause")
@@ -388,9 +381,7 @@ class MusicPlayerPopup:
         new_volume = self.musique_player.volume + increment
         self.musique_player.set_volume(new_volume)
 
-
 #------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 
 class StickFigureWindow:
     def __init__(self):
